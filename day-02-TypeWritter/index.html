@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TypeWritter</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="typewriter" id="typewriter"></div>
+
+    <script>
+      const text = "Hello, My name is Ankul Agarwal. How are You!";
+      let index = 0;
+      const speed = 100; // Speed in milliseconds
+
+      function typeWriter() {
+        if (index < text.length) {
+          document.getElementById("typewriter").innerHTML += text.charAt(index);
+          index++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+
+      window.onload = function () {
+        typeWriter();
+      };
+    </script>
+  </body>
+</html>
