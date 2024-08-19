@@ -8,6 +8,7 @@ Check out the live demo of my daily web components:
 - [Day 04: Sidebar](https://ankul07.github.io/100DaysWebComponents/day-04-Sidebar/)
 - [Day 05: Parallax ](https://ankul07.github.io/100DaysWebComponents/day-05-Parallax-Scrolling/)
 - [Day 06: Loader ](https://ankul07.github.io/100DaysWebComponents/day-06-Loader/)
+- [Day 07: Accordion ](https://ankul07.github.io/100DaysWebComponents/day-07-Accordion/)
 
 - ... More to come!
 
