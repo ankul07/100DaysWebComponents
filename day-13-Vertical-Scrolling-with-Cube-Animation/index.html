@@ -47,26 +47,24 @@
         rightAside.classList.add("active");
       };
 
-      // Function to clone the images and create an infinite effect
       function createInfiniteScroll(container) {
-        const originalContent = container.innerHTML; // Get original images
-        container.innerHTML += originalContent; // Clone and append it
+        const originalContent = container.innerHTML;
+        container.innerHTML += originalContent;
 
-        let scrollSpeed = 1; // Adjust the speed of scrolling
+        let scrollSpeed = 1;
 
         function scrollImages() {
           container.scrollTop += scrollSpeed;
-          // Reset scroll when the original set of images has scrolled out of view
+
           if (container.scrollTop >= container.scrollHeight / 2) {
             container.scrollTop = 0;
           }
-          requestAnimationFrame(scrollImages); // Keep the animation going
+          requestAnimationFrame(scrollImages);
         }
 
         scrollImages();
       }
 
-      // Create infinite scroll for both the left and right side
       createInfiniteScroll(leftAside);
       createInfiniteScroll(rightAside);
     </script>
