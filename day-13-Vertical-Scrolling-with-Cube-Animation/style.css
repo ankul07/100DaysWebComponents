@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  max-width: 1440px;
+  margin: auto;
+  background-color: #faf9f6;
+  display: grid;
+  grid-template-columns: 10% 70% 10%;
+  column-gap: 5%;
+  background-color: #000;
+  overflow: hidden;
+}
+aside {
+  background-color: #9580ff;
+  height: 100%;
+  overflow: hidden;
+
+  /* padding: 50px 0; */
+}
+div {
+  border: 1px solid black;
+}
+
+.skills-content {
+  /* width: 100%; */
+  /* margin: auto; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+  align-items: center;
+  border: none;
+  padding: 2rem;
+}
+.left-aside {
+  /* border-radius: 0 50px 50px 0; */
+  transform: translateX(-100%);
+}
+.left-aside.active {
+  transform: translateX(0);
+  transition: all 1s;
+}
+.right-aside {
+  /* border-radius: 50px 0 0 50px; */
+  transform: translateX(100%);
+}
+.right-aside.active {
+  transform: translateX(0);
+  transition: all 1s;
+}
+
+.left-aside .skills-content {
+  animation: scrollTop 10s linear infinite;
+}
+.right-aside .skills-content {
+  animation: scrolldown 10s linear infinite;
+}
+.skills-content img {
+  width: 100%;
+}
+@keyframes scrollTop {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes scrolldown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.box {
+  height: 250px;
+  width: 250px;
+  border: none;
+  transform-style: preserve-3d;
+  /* transform: rotateY(130deg); */
+  animation: animate 3s infinite;
+}
+@keyframes animate {
+  0% {
+    transform: rotateX(45deg) rotateY(-45deg);
+  }
+  25% {
+    transform: rotateX(-45deg) rotateY(-45deg);
+  }
+  50% {
+    transform: rotateX(45deg) rotateY(-45deg);
+  }
+  75% {
+    transform: rotateX(-45deg) rotateY(45deg);
+  }
+  100% {
+    transform: rotateX(45deg) rotateY(-45deg);
+  }
+}
+.card {
+  height: 250px;
+  width: 250px;
+  text-align: center;
+  padding: 100px 0;
+  color: white;
+  background-color: black;
+  border: 2px solid black;
+  font-size: 32px;
+  box-sizing: border-box;
+  position: absolute;
+  transition: all 1s;
+}
+#front {
+  transform: translateZ(125px);
+  background-image: url("./react.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+#back {
+  transform: translateZ(-125px);
+  background-image: url("./tailwind.png ");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+#left {
+  right: 125px;
+  transform: rotateY(-90deg);
+  background-image: url("./typescript.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#right {
+  left: 125px;
+  transform: rotateY(90deg);
+  background-image: url("./mongo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #ffffff;
+}
+
+#top {
+  bottom: 125px;
+  transform: rotateX(90deg);
+  background-image: url("./node.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #ffffff;
+}
+
+#bottom {
+  top: 125px;
+  transform: rotateX(-90deg);
+  background-image: url("./figma.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-color: #ffffff;
+}
+
+.box:hover #front {
+  transform: translateZ(180px) rotate(360deg);
+}
+.box:hover #back {
+  transform: translateZ(-180px) rotate(360deg);
+}
+
+.box:hover #left {
+  right: 180px;
+}
+
+.box:hover #right {
+  left: 180px;
+}
+
+.box:hover #top {
+  bottom: 180px;
+}
+
+.box:hover #bottom {
+  top: 180px;
+}
+
+@media (max-width: 800px) {
+  body {
+    max-height: 100vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 70% 10%;
+    overflow: hidden;
+    /* row-gap: 5%; */
+  }
+  .skills-content {
+    width: 100%;
+    /* margin: auto; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    border: none;
+    /* padding: 2rem; */
+  }
+  .skills-content img {
+    width: 50px;
+  }
+  .left-aside .skills-content {
+    animation: scrollright 10s linear infinite;
+  }
+  .right-aside .skills-content {
+    animation: scrollleft 10s linear infinite;
+  }
+
+  @keyframes scrollright {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes scrollleft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
