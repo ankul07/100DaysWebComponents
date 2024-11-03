@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irrigation Control Ankulcode</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #e9f5f5;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+      }
+
+      h2 {
+        margin-top: 30px;
+        color: #2980b9;
+        font-size: 1.8em;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        margin-right: 10px;
+        font-size: 1.2em;
+        color: #34495e;
+      }
+
+      select {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #2980b9;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      select:focus {
+        border-color: #1abc9c;
+      }
+
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+      }
+
+      #sensorData {
+        border: 1px solid #2980b9;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      #selectedCrop {
+        font-size: 1.5em;
+        color: #2980b9;
+        margin: 20px 0;
+      }
+
+      canvas {
+        max-width: 600px;
+        margin: 20px auto;
+        display: block;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2em;
+        }
+
+        h2 {
+          font-size: 1.5em;
+        }
+
+        label,
+        select,
+        button {
+          font-size: 1em;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Smart Irrigation System</h1>
+    <h2>Select Crop</h2>
+    <form id="cropForm">
+      <label for="crop">Choose a crop:</label>
+      <select name="crop" id="crop">
+        <option value="Wheat">Wheat</option>
+        <option value="Rice">Rice</option>
+        <option value="Maize">Maize</option>
+      </select>
+      <button type="submit">Set Threshold</button>
+    </form>
+
+    <div id="selectedCrop">Selected Crop: <span id="cropName">None</span></div>
+
+    <h2>Real-Time Data</h2>
+    <div id="sensorData">
+      <p>Soil Moisture: --</p>
+      <p>Temperature: --</p>
+    </div>
+
+    <h2>Sensor Data Charts</h2>
+    <canvas id="moistureChart"></canvas>
+    <canvas id="temperatureChart"></canvas>
+
+    <script>
+      // Dummy data arrays
+      const moistureData = [];
+      const temperatureData = [];
+      const timestamps = [];
+
+      // Generate dummy sensor data
+      function generateDummyData() {
+        const timestamp = new Date().toLocaleTimeString();
+        const soilMoisture = (Math.random() * 100).toFixed(2);
+        const temperature = (Math.random() * 35 + 15).toFixed(2);
+
+        timestamps.push(timestamp);
+        moistureData.push(soilMoisture);
+        temperatureData.push(temperature);
+
+        if (timestamps.length > 10) {
+          timestamps.shift();
+          moistureData.shift();
+          temperatureData.shift();
+        }
+
+        $("#sensorData").html(
+          `<p>Timestamp: ${timestamp}</p>
+                <p>Soil Moisture: ${soilMoisture} %</p>
+                <p>Temperature: ${temperature} °C</p>`
+        );
+      }
+
+      const ctxMoisture = document
+        .getElementById("moistureChart")
+        .getContext("2d");
+      const ctxTemperature = document
+        .getElementById("temperatureChart")
+        .getContext("2d");
+
+      const moistureChart = new Chart(ctxMoisture, {
+        type: "line",
+        data: {
+          labels: timestamps, // Timestamps
+          datasets: [
+            {
+              label: "Soil Moisture",
+              data: moistureData, // Soil moisture data
+              borderColor: "blue",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: "Timestamp" } },
+            y: { title: { display: true, text: "Soil Moisture (%)" } },
+          },
+        },
+      });
+
+      const temperatureChart = new Chart(ctxTemperature, {
+        type: "line",
+        data: {
+          labels: timestamps, // Timestamps
+          datasets: [
+            {
+              label: "Temperature",
+              data: temperatureData, // Temperature data
+              borderColor: "red",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: "Timestamp" } },
+            y: { title: { display: true, text: "Temperature (°C)" } },
+          },
+        },
+      });
+
+      // Update charts and sensor data periodically
+      setInterval(function () {
+        generateDummyData();
+
+        // Update charts with new data
+        moistureChart.data.labels = timestamps;
+        moistureChart.data.datasets[0].data = moistureData;
+        moistureChart.update();
+
+        temperatureChart.data.labels = timestamps;
+        temperatureChart.data.datasets[0].data = temperatureData;
+        temperatureChart.update();
+      }, 5000); // Update every 5 seconds
+
+      // Handle crop selection
+      $("#cropForm").on("submit", function (event) {
+        event.preventDefault();
+        const selectedCrop = $("#crop").val();
+        $("#cropName").text(selectedCrop);
+      });
+    </script>
+  </body>
+</html>
