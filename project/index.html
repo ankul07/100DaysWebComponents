@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irrigation Control</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      h2 {
+        margin-top: 30px;
+        color: #555;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      select {
+        padding: 5px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 5px 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #sensorData {
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: white;
+      }
+
+      canvas {
+        max-width: 600px;
+        margin: 20px auto;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Smart Irrigation System</h1>
+    <h2>Select Crop</h2>
+    <form id="cropForm">
+      <label for="crop">Choose a crop:</label>
+      <select name="crop" id="crop">
+        {% for crop in crops %}
+        <option value="{{ crop }}">{{ crop }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Set Threshold</button>
+    </form>
+
+    <h2>Real-Time Data</h2>
+    <div id="sensorData">
+      <p>Soil Moisture: --</p>
+      <p>Temperature: --</p>
+    </div>
+
+    <h2>Sensor Data Charts</h2>
+    <canvas id="moistureChart"></canvas>
+    <canvas id="temperatureChart"></canvas>
+
+    <script>
+      // Handle form submission
+      $("#cropForm").on("submit", function (event) {
+        event.preventDefault();
+        let crop = $("#crop").val();
+        $.post("/set_threshold", { crop: crop }, function (response) {
+          alert(response.status);
+        });
+      });
+
+      // Fetch real-time sensor data periodically
+      setInterval(function () {
+        $.get("/get_data", function (data) {
+          $("#sensorData").html(
+            `<p>Timestamp: ${data.timestamp}</p>
+                    <p>Soil Moisture: ${data.soil_moisture}</p>
+                    <p>Temperature: ${data.temperature}</p>`
+          );
+        });
+      }, 5000); // Fetch data every 5 seconds
+
+      // Initialize Chart.js line charts
+      const ctxMoisture = document
+        .getElementById("moistureChart")
+        .getContext("2d");
+      const ctxTemperature = document
+        .getElementById("temperatureChart")
+        .getContext("2d");
+
+      const moistureChart = new Chart(ctxMoisture, {
+        type: "line",
+        data: {
+          labels: [], // Timestamps
+          datasets: [
+            {
+              label: "Soil Moisture",
+              data: [], // Soil moisture data
+              borderColor: "blue",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: "Timestamp" } },
+            y: { title: { display: true, text: "Soil Moisture" } },
+          },
+        },
+      });
+
+      const temperatureChart = new Chart(ctxTemperature, {
+        type: "line",
+        data: {
+          labels: [], // Timestamps
+          datasets: [
+            {
+              label: "Temperature",
+              data: [], // Temperature data
+              borderColor: "red",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: "Timestamp" } },
+            y: { title: { display: true, text: "Temperature" } },
+          },
+        },
+      });
+
+      // Fetch chart data and update charts periodically
+      function updateCharts() {
+        $.get("/get_chart_data", function (chartData) {
+          moistureChart.data.labels = chartData.timestamps;
+          moistureChart.data.datasets[0].data = chartData.soil_moisture;
+          moistureChart.update();
+
+          temperatureChart.data.labels = chartData.timestamps;
+          temperatureChart.data.datasets[0].data = chartData.temperature;
+          temperatureChart.update();
+        });
+      }
+
+      setInterval(updateCharts, 5000); // Update charts every 5 seconds
+    </script>
+  </body>
+</html>
