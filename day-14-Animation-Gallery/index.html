@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Gallery @ankulcode</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #ffd6e6;
+        overflow-x: hidden;
+      }
+
+      .scene {
+        width: clamp(200px, 80vw, 300px);
+        height: clamp(200px, 80vw, 300px);
+        perspective: 1200px;
+        transform-style: preserve-3d;
+        margin: 20px;
+      }
+
+      .outer-cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        animation: rotate 15s infinite linear;
+        pointer-events: none;
+      }
+
+      .face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        transition: transform 0.5s ease;
+        background-color: rgba(255, 255, 255, 1);
+        border: 2px solid #ff69b4;
+        pointer-events: auto;
+        backface-visibility: visible;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .face img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .front {
+        transform: translateZ(clamp(100px, 40vw, 150px));
+      }
+      .back {
+        transform: rotateY(180deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+      .right {
+        transform: rotateY(90deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+      .left {
+        transform: rotateY(-90deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+      .top {
+        transform: rotateX(90deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+      .bottom {
+        transform: rotateX(-90deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+
+      /* Hover/touch states */
+      .scene:hover .front,
+      .scene:active .front {
+        transform: translateZ(clamp(150px, 60vw, 250px));
+      }
+      .scene:hover .back,
+      .scene:active .back {
+        transform: rotateY(180deg) translateZ(clamp(150px, 60vw, 250px));
+      }
+      .scene:hover .right,
+      .scene:active .right {
+        transform: rotateY(90deg) translateZ(clamp(150px, 60vw, 250px));
+      }
+      .scene:hover .left,
+      .scene:active .left {
+        transform: rotateY(-90deg) translateZ(clamp(150px, 60vw, 250px));
+      }
+      .scene:hover .top,
+      .scene:active .top {
+        transform: rotateX(90deg) translateZ(clamp(150px, 60vw, 250px));
+      }
+      .scene:hover .bottom,
+      .scene:active .bottom {
+        transform: rotateX(-90deg) translateZ(clamp(150px, 60vw, 250px));
+      }
+
+      .inner-cube {
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        transform-style: preserve-3d;
+        animation: rotate 10s infinite linear reverse;
+        pointer-events: none;
+      }
+
+      .inner-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-color: rgba(255, 192, 203, 0.9);
+        border: 1px solid #ff69b4;
+        backface-visibility: visible;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .inner-face img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .inner-front {
+        transform: translateZ(clamp(50px, 20vw, 75px));
+      }
+      .inner-back {
+        transform: rotateY(180deg) translateZ(clamp(50px, 20vw, 75px));
+      }
+      .inner-right {
+        transform: rotateY(90deg) translateZ(clamp(50px, 20vw, 75px));
+      }
+      .inner-left {
+        transform: rotateY(-90deg) translateZ(clamp(50px, 20vw, 75px));
+      }
+      .inner-top {
+        transform: rotateX(90deg) translateZ(clamp(50px, 20vw, 75px));
+      }
+      .inner-bottom {
+        transform: rotateX(-90deg) translateZ(clamp(50px, 20vw, 75px));
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotateX(0) rotateY(0);
+        }
+        100% {
+          transform: rotateX(360deg) rotateY(360deg);
+        }
+      }
+
+      @media (hover: none) {
+        .scene {
+          touch-action: manipulation;
+        }
+      }
+
+      @media (orientation: landscape) and (max-height: 500px) {
+        .scene {
+          width: clamp(150px, 50vh, 300px);
+          height: clamp(150px, 50vh, 300px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scene">
+      <div class="outer-cube">
+        <div class="face front">
+          <img src="./images/IMG-20250202-WA0001.jpg" alt="front" />
+        </div>
+        <div class="face back">
+          <img src="./images/IMG-20250202-WA0002.jpg" alt="back" />
+        </div>
+        <div class="face right">
+          <img src="./images/IMG-20250202-WA0003.jpg" alt="right" />
+        </div>
+        <div class="face left">
+          <img src="./images/IMG-20250202-WA0004.jpg" alt="left" />
+        </div>
+        <div class="face top">
+          <img src="./images/IMG-20250202-WA0005.jpg" alt="top" />
+        </div>
+        <div class="face bottom">
+          <img src="./images/IMG-20250202-WA0006.jpg" alt="bottom" />
+        </div>
+
+        <div class="inner-cube">
+          <div class="inner-face inner-front">
+            <img src="./images/IMG-20250202-WA0007.jpg" alt="inner front" />
+          </div>
+          <div class="inner-face inner-back">
+            <img src="./images/IMG-20250202-WA0008.jpg" alt="inner back" />
+          </div>
+          <div class="inner-face inner-right">
+            <img src="./images/IMG-20250202-WA0009.jpg" alt="inner right" />
+          </div>
+          <div class="inner-face inner-left">
+            <img src="./images/IMG-20250202-WA0010.jpg" alt="inner left" />
+          </div>
+          <div class="inner-face inner-top">
+            <img src="./images/IMG-20250202-WA0011.jpg" alt="inner top" />
+          </div>
+          <div class="inner-face inner-bottom">
+            <img src="./images/IMG-20250202-WA0012.jpg" alt="inner bottom" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
