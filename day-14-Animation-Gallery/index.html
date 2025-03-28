@@ -1,8 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animation Gallery @ankulcode</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Crush Gallery – A 3D Tribute to Your Special One</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="A stunning animated cube gallery dedicated to your crush, featuring smooth transitions and a stylish 3D effect."
+    />
+    <meta
+      name="keywords"
+      content="Crush Gallery, Love Animation, 3D Cube, Romantic Crush Effect, WebGL, CSS3"
+    />
+    <meta name="author" content="AnkulCodes" />
+
+    <!-- Open Graph for Facebook & WhatsApp -->
+    <meta property="og:title" content="Crush Gallery Animation" />
+    <meta
+      property="og:description"
+      content="An interactive 3D cube gallery with crush images and love effects."
+    />
+    <meta
+      property="og:image"
+      content="https://yourwebsite.com/crush-preview.jpg"
+    />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Crush Gallery Animation" />
+    <meta
+      name="twitter:description"
+      content="A dreamy animated cube featuring your crush's best moments."
+    />
+    <meta
+      name="twitter:image"
+      content="https://yourwebsite.com/crush-preview.jpg"
+    />
+
+    <!-- Performance & UX -->
+    <meta name="theme-color" content="#ff4d6d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="robots" content="index, follow" />
     <style>
       * {
         margin: 0;
@@ -16,8 +64,29 @@
         align-items: center;
         min-height: 100vh;
         margin: 0;
-        background: #ffd6e6;
+        background: linear-gradient(135deg, #ffd6e6, #ff69b4);
         overflow-x: hidden;
+      }
+
+      .quote-container {
+        text-align: center;
+        position: absolute;
+        top: 0;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .quote {
+        font-family: "Great Vibes", cursive;
+        font-size: 2.5rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .quote-author {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1rem;
+        font-weight: bolder;
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 10px;
       }
 
       .scene {
@@ -43,11 +112,15 @@
         height: 100%;
         background-size: cover;
         transition: transform 0.5s ease;
-        background-color: rgba(255, 255, 255, 1);
-        border: 2px solid #ff69b4;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        /* border: 2px solid #ff69b4; */
+        border: 2px solid rgba(255, 105, 180, 0.5);
         pointer-events: auto;
         backface-visibility: visible;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0.8;
       }
 
       .face img {
@@ -55,6 +128,7 @@
         height: 100%;
         object-fit: cover;
         pointer-events: none;
+        opacity: 0.5;
       }
 
       .front {
@@ -74,6 +148,17 @@
       }
       .bottom {
         transform: rotateX(-90deg) translateZ(clamp(100px, 40vw, 150px));
+      }
+
+      .scene:hover .face,
+      .scene:focus-within .face,
+      .scene:active .face {
+        background-color: rgba(255, 255, 255, 1);
+        opacity: 1;
+      }
+
+      .scene:hover .face img {
+        opacity: 1;
       }
 
       /* Hover/touch states */
@@ -174,45 +259,49 @@
     </style>
   </head>
   <body>
+    <div class="quote-container">
+      <div class="quote">"You are my today, my tomorrow, and my forever"</div>
+      <div class="quote-author">— AnkulCodes</div>
+    </div>
     <div class="scene">
       <div class="outer-cube">
         <div class="face front">
-          <img src="./images/IMG-20250202-WA0001.jpg" alt="front" />
+          <img src="./images/one.jpg" alt="front" />
         </div>
         <div class="face back">
-          <img src="./images/IMG-20250202-WA0002.jpg" alt="back" />
+          <img src="./images/two.jpg" alt="back" />
         </div>
         <div class="face right">
-          <img src="./images/IMG-20250202-WA0003.jpg" alt="right" />
+          <img src="./images/three.jpg" alt="right" />
         </div>
         <div class="face left">
-          <img src="./images/IMG-20250202-WA0004.jpg" alt="left" />
+          <img src="./images/four.jpg" alt="left" />
         </div>
         <div class="face top">
-          <img src="./images/IMG-20250202-WA0005.jpg" alt="top" />
+          <img src="./images/fice.jpg" alt="top" />
         </div>
         <div class="face bottom">
-          <img src="./images/IMG-20250202-WA0006.jpg" alt="bottom" />
+          <img src="./images/six.jpg" alt="bottom" />
         </div>
 
         <div class="inner-cube">
           <div class="inner-face inner-front">
-            <img src="./images/IMG-20250202-WA0007.jpg" alt="inner front" />
+            <img src="./images/seven.jpg" alt="inner front" />
           </div>
           <div class="inner-face inner-back">
-            <img src="./images/IMG-20250202-WA0008.jpg" alt="inner back" />
+            <img src="./images/eight.jpg" alt="inner back" />
           </div>
           <div class="inner-face inner-right">
-            <img src="./images/IMG-20250202-WA0009.jpg" alt="inner right" />
+            <img src="./images/nine.jpg" alt="inner right" />
           </div>
           <div class="inner-face inner-left">
-            <img src="./images/IMG-20250202-WA0010.jpg" alt="inner left" />
+            <img src="./images/ten.avif" alt="inner left" />
           </div>
           <div class="inner-face inner-top">
-            <img src="./images/IMG-20250202-WA0011.jpg" alt="inner top" />
+            <img src="./images/eleven.jpg" alt="inner top" />
           </div>
           <div class="inner-face inner-bottom">
-            <img src="./images/IMG-20250202-WA0012.jpg" alt="inner bottom" />
+            <img src="./images/twelve.jpg" alt="inner bottom" />
           </div>
         </div>
       </div>
