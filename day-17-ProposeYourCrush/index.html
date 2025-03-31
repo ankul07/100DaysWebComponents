@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be Mine? -@ankurcodes 💖</title>
+    <meta
+      name="description"
+      content="Express your feelings with a beautifully designed proposal website. Make your moment special!"
+    />
+    <meta
+      name="keywords"
+      content="proposal, love, crush, express feelings, romantic proposal"
+    />
+    <meta name="author" content="AnkurCodes" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph for social media sharing -->
+    <meta property="og:title" content="Propose Your Crush - Make It Special" />
+    <meta
+      property="og:description"
+      content="Express your feelings with a beautifully designed proposal website."
+    />
+    <meta property="og:url" content="https://ankulagarwal.vercel.app/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card for Twitter sharing -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Propose Your Crush - Make It Special" />
+    <meta
+      name="twitter:description"
+      content="Express your feelings with a beautifully designed proposal website."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://ankurcodes.com/favicon.png"
+    />
+
+    <!-- Author Profile -->
+    <meta property="og:site_name" content="AnkurCodes" />
+    <meta name="author" content="AnkurCodes" />
+    <meta name="github" content="https://github.com/ankurcodes" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="hearts-bg" id="heartsBg"></div>
+
+      <div class="card">
+        <!-- Lovely GIF -->
+        <img src="./images/1.gif" alt="Love Bear" class="love-gif" />
+
+        <!-- 3D Rotating Gallery -->
+        <div class="gallery-container">
+          <div class="gallery" id="gallery">
+            <!-- Photos will be added dynamically by JavaScript -->
+          </div>
+        </div>
+
+        <h1>Will You Be Mine? <i class="fas fa-heart"></i></h1>
+
+        <p class="message">
+          From the moment I first saw you, something special happened. Every
+          time I see your smile, my day becomes brighter. You're the
+          <span class="highlight">most amazing person</span> I've ever met, and
+          I can't stop thinking about you. Will you make me the happiest person
+          and be mine?
+        </p>
+
+        <div class="buttons">
+          <button class="btn btn-yes" id="yesBtn">
+            <i class="fas fa-heart"></i> Yes, I Will!
+          </button>
+          <button class="btn btn-no" id="noBtn">
+            <i class="fas fa-times"></i> No
+          </button>
+        </div>
+
+        <div class="benefits" id="benefits">
+          <h3>Why You Should Say Yes:</h3>
+          <ul class="benefits-list">
+            <li>I'll always be there for you, through good times and bad</li>
+            <li>You'll get unlimited hugs and kisses whenever you want</li>
+            <li>I promise to make you smile every single day</li>
+            <li>We'll create the most beautiful memories together</li>
+            <li>I'll be your biggest supporter in everything you do</li>
+            <li>
+              You'll have someone who thinks you're perfect just the way you are
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+      <div class="celebration-content">
+        <!-- Main celebration GIF -->
+        <img
+          src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
+          alt="Celebration Kiss"
+          class="celebration-gif"
+          id="celebrationGif"
+        />
+
+        <!-- I Love You Animated Heading -->
+        <div class="love-heading-container">
+          <h2 class="love-heading" id="loveHeading">
+            I Love You <i class="fas fa-heart"></i>
+          </h2>
+        </div>
+
+        <!-- Yay message -->
+        <h2>Yay! You've made me the happiest person! ❤️</h2>
+
+        <!-- Love Letter with Typing Effect -->
+        <div class="love-letter">
+          <h3>Dear Sweetheart,</h3>
+          <div id="typed-text" class="typed-text"></div>
+          <div class="signature">
+            With all my heart,<br />
+            Yours Forever ❤️
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio elements for button clicks -->
+    <audio id="yesAudio" src="./audio/1.mp3" preload="auto"></audio>
+    <audio id="noAudio" src="./audio/music.mp3" preload="auto"></audio>
+
+    <script>
+      // Create background hearts
+      const heartsBg = document.getElementById("heartsBg");
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+      const benefits = document.getElementById("benefits");
+      const celebration = document.getElementById("celebration");
+      const loveHeading = document.getElementById("loveHeading");
+      const gallery = document.getElementById("gallery");
+      const yesAudio = document.getElementById("yesAudio");
+      const noAudio = document.getElementById("noAudio");
+      const typedText = document.getElementById("typed-text");
+
+      // Text for the love letter (shortened version)
+      const loveLetterText =
+        "Thank you for saying yes and making this day so special. Your smile brightens my darkest days and your laugh is the sweetest melody. I promise to be there for you always, through every joy and challenge life brings. This is just the beginning of our beautiful journey together. I can't wait to create countless memories with you!";
+
+      // Photos in your images folder - replace with actual image names
+      const photoUrls = [
+        "./images/two.jpg",
+        "./images/nine.jpg",
+        "./images/ten.avif",
+        "./images/eight.jpg",
+        "./images/three.jpg",
+        "./images/seven.jpg",
+      ];
+
+      // Create floating hearts in background
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.opacity = Math.random() * 0.5 + 0.3;
+        heart.style.width = `${Math.random() * 20 + 10}px`;
+        heart.style.height = heart.style.width;
+        heartsBg.appendChild(heart);
+      }
+
+      // Create 3D rotating gallery with spacing between photos
+      for (let i = 0; i < photoUrls.length; i++) {
+        const item = document.createElement("div");
+        item.className = "gallery-item";
+
+        // Calculate position around the rectangle for more spacing
+        const angle = (i / photoUrls.length) * Math.PI * 2;
+        const radius = 100; // Increased radius for more spacing
+
+        // Position in 3D space
+        item.style.transform = `rotateY(${angle}rad) translateZ(${radius}px)`;
+
+        // Create and add image
+        const img = document.createElement("img");
+        img.src = photoUrls[i];
+        img.alt = "Photo";
+        item.appendChild(img);
+
+        gallery.appendChild(item);
+      }
+
+      // Make the "No" button move away when hovered or on mobile when tapped
+      function moveNoButton() {
+        // Get card dimensions
+        const cardRect = document
+          .querySelector(".card")
+          .getBoundingClientRect();
+
+        // Calculate a new position
+        let newX = Math.random() * (cardRect.width - 100);
+        let newY = Math.random() * (cardRect.height - 50);
+
+        // Make sure button stays visible
+        newX = Math.max(0, Math.min(newX, cardRect.width - 100));
+        newY = Math.max(0, Math.min(newY, cardRect.height - 50));
+
+        // Apply the new position
+        noBtn.style.position = "absolute";
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
+
+        // Make sure the No button doesn't block other elements
+        noBtn.style.zIndex = "100";
+      }
+
+      // Typing effect function
+      function typeWriter(text, element, i = 0, speed = 40) {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(() => typeWriter(text, element, i, speed), speed);
+        }
+      }
+
+      // For desktop: Move on hover
+      noBtn.addEventListener("mouseover", moveNoButton);
+
+      // For mobile: Move on tap (but not activate)
+      noBtn.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        moveNoButton();
+      });
+
+      // Show benefits and play No music when clicking No
+      noBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        benefits.classList.add("show");
+        noAudio.play();
+      });
+
+      // Celebration and play Yes music when clicking Yes
+      yesBtn.addEventListener("click", function () {
+        celebration.style.display = "flex";
+        yesAudio.play();
+
+        // Show "I Love You" animation first
+        setTimeout(() => {
+          loveHeading.classList.add("show");
+
+          // Show the rest of the content after animation
+          setTimeout(() => {
+            document
+              .querySelectorAll(
+                ".celebration-content > *:not(.love-heading-container)"
+              )
+              .forEach((el) => {
+                el.style.opacity = "1";
+              });
+
+            // Start typing effect for the love letter
+            typeWriter(loveLetterText, typedText);
+          }, 1500);
+        }, 500);
+
+        // Create confetti
+        for (let i = 0; i < 100; i++) {
+          createConfetti();
+        }
+      });
+
+      // Create confetti effect
+      function createConfetti() {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        // Random confetti properties
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.width = `${Math.random() * 10 + 5}px`;
+        confetti.style.height = `${Math.random() * 10 + 5}px`;
+        confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+
+        celebration.appendChild(confetti);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+
+      // Get random color for confetti
+      function getRandomColor() {
+        const colors = [
+          "#ff6b6b",
+          "#f06292",
+          "#5c6bc0",
+          "#26c6da",
+          "#43a047",
+          "#fdd835",
+          "#ff9800",
+          "#795548",
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      // Optimize for mobile
+      function checkMobile() {
+        if (window.innerWidth <= 600) {
+          noBtn.addEventListener("touchstart", moveNoButton);
+        }
+      }
+
+      // Initialize
+      window.addEventListener("load", checkMobile);
+      window.addEventListener("resize", checkMobile);
+    </script>
+  </body>
+</html>
